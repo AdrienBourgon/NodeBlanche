@@ -1,0 +1,8 @@
+# Compiled sources
+dist
+
+# Node modules
+node_modules
+
+# Other JS files
+**/*.js

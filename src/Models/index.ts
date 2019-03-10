@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 import { DBInterface } from 'Infrastructure/Typings/DBInterface';
 import { ExampleFactory } from './Example';

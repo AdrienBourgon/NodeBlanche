@@ -1,10 +1,12 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import Sequelize from 'sequelize';
+import { Sequelize } from 'sequelize';
 import * as Umzug from 'umzug';
 import * as sequelizeConfig from './Config/sequelize.dev.json';
 import { createModels } from './Models';
 import Communication from './Services/Communication';
+import Exception from './Infrastructure/Exception.js';
+
 // Creating models
 const db = createModels(sequelizeConfig);
 
@@ -39,5 +41,13 @@ app
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
   .use('/', require('./Routes/Example'))
+
+  // Errors handler
+  .use((err, req, res, next) => {
+    if(err instanceof Exception) {
+      res.status(err.StatusCode()).json(err);
+    }
+    next(err, req, res, next);
+  })
 
   .listen(8080);

@@ -1,12 +1,10 @@
-import { DBInterface } from 'Infrastructure/Typings/DBInterface';
-
 export default class Communication {
-  private static db: DBInterface = undefined;
+  private static db = undefined;
 
-  public static setDB(db: DBInterface) {
+  public static setDB(db) {
     Communication.db = db;
   }
-  public static getDB(): DBInterface {
+  public static getDB() {
     return Communication.db;
   }
 }

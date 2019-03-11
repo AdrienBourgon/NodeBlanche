@@ -1,8 +1,8 @@
-import { DBInterface } from '../Infrastructure/Typings/DBInterface';
 import Communication from '../Services/Communication';
+import { Sequelize } from 'sequelize-typescript';
 
 export default abstract class Command<T> {
-  protected db: DBInterface;
+  protected db: Sequelize;
 
   constructor() {
     this.db = Communication.getDB();

@@ -1,24 +1,27 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import * as Umzug from 'umzug';
 import * as sequelizeConfig from './Config/sequelize.dev.json';
-import { createModels } from './Models';
 import Communication from './Services/Communication';
 import Exception from './Infrastructure/Exception.js';
+import Example from './Models/Example.js';
 
 // Creating models
-const db = createModels(sequelizeConfig);
+const db = new Sequelize(<any>sequelizeConfig);
+db.addModels([
+  Example
+]);
 
 // Migrations
 const umzug = new Umzug({
   storage: 'sequelize',
   storageOptions: {
-    sequelize: db.sequelize,
+    sequelize: db,
   },
   migrations: {
     params: [
-      db.sequelize.getQueryInterface(),
+      db.getQueryInterface(),
       Sequelize,
     ],
     path: './dist/Migrations',

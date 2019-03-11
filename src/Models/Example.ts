@@ -1,27 +1,26 @@
-import * as Sequelize from 'sequelize';
+import {Table, Column, Model, PrimaryKey, BeforeCreate, CreatedAt, UpdatedAt, DeletedAt} from 'sequelize-typescript';
+import * as uuid from 'uuid/v4';
 
-export interface ExampleAttributes {
-  id?: string;
+@Table
+export default class Example extends Model<Example> {
+  @PrimaryKey
+  @Column
+  id: string;
+
+  @Column
   text: string;
+
+  @Column
   something?: string;
-}
+  
+  @CreatedAt
+  createdAt: Date;
 
-export interface ExampleInstance extends Sequelize.Instance<ExampleAttributes> {
-
-};
-
-export function ExampleFactory(sequelize: Sequelize.Sequelize): Sequelize.Model<ExampleInstance, ExampleAttributes> {
-  return sequelize.define<ExampleInstance, ExampleAttributes>('Example', {
-    id: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
-    },
-    text: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      defaultValue: '',
-    },
-    something: Sequelize.STRING,
-  });
+  @UpdatedAt
+  updatedAt: Date;
+  
+  @BeforeCreate
+  static function(instance: Example) {
+    instance.id = uuid();
+  }
 }

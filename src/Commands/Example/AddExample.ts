@@ -1,10 +1,10 @@
-import { ExampleAttributes } from '../../Models/Example';
 import Command from '../Command';
+import Example from '../../Models/Example';
 
-export default class AddExample extends Command<ExampleAttributes> {
-  public Handle(example: ExampleAttributes): any {
-    return this.db.sequelize.transaction((t) => {
-      return this.db.Example.create(example);
+export default class AddExample extends Command<Example> {
+  public Handle(example: Example): any {
+    return this.db.transaction((t) => {
+      return Example.build(example).save();
     });
   }
 }

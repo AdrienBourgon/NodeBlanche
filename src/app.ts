@@ -4,7 +4,7 @@ import { Sequelize } from 'sequelize-typescript';
 import * as Umzug from 'umzug';
 import * as sequelizeConfig from './Config/sequelize.dev.json';
 import Communication from './Services/Communication';
-import Exception from './Infrastructure/Exception.js';
+import exceptionHandler from './Infrastructure/ExceptionHandler';
 import Example from './Models/Example.js';
 
 // Creating models
@@ -43,14 +43,11 @@ const app = express();
 app
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
+
+  // Routes
   .use('/', require('./Routes/Example'))
 
-  // Errors handler
-  .use((err, req, res, next) => {
-    if(err instanceof Exception) {
-      res.status(err.StatusCode()).json(err);
-    }
-    next(err, req, res, next);
-  })
+  // Exceptions handler
+  .use(exceptionHandler)
 
   .listen(8080);

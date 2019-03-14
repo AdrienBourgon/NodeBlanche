@@ -4,7 +4,7 @@ import GetExamples from '../Queries/Example/GetExamples';
 export default {
   // Queries
   getAll: (req, res) => {
-    new GetExamples().Handle()
+    new GetExamples(req.query.filters).Handle()
       .then((data: any) => {
         res.json(data);
       });

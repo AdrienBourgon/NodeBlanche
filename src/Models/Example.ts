@@ -1,4 +1,4 @@
-import {Table, Column, Model, PrimaryKey, BeforeCreate, CreatedAt, UpdatedAt, DeletedAt} from 'sequelize-typescript';
+import {Table, Column, Model, PrimaryKey, BeforeCreate, CreatedAt, UpdatedAt} from 'sequelize-typescript';
 import * as uuid from 'uuid/v4';
 
 @Table

@@ -4,8 +4,9 @@ import { Sequelize } from 'sequelize-typescript';
 import * as Umzug from 'umzug';
 import * as sequelizeConfig from './Config/sequelize.dev.json';
 import Communication from './Services/Communication';
-import exceptionHandler from './Infrastructure/ExceptionHandler';
+import ExceptionHandler from './Infrastructure/ExceptionHandler';
 import Example from './Models/Example.js';
+import AuthenticationMiddleware from './Middlewares/Authentication';
 
 // Creating models
 const db = new Sequelize(<any>sequelizeConfig);
@@ -44,10 +45,16 @@ app
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
 
+  // Route for authentication
+  .use('/login', require('./Routes/Authentication'))
+  
+  // Can't go further without being authenticated
+  .use(AuthenticationMiddleware)
+
   // Routes
   .use('/', require('./Routes/Example'))
 
   // Exceptions handler
-  .use(exceptionHandler)
+  .use(ExceptionHandler)
 
   .listen(8080);

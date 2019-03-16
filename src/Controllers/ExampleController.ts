@@ -4,7 +4,7 @@ import GetExamples from '../Queries/Example/GetExamples';
 export default {
   // Queries
   getAll: (req, res, next) => {
-    new GetExamples(req.query.filters).Handle()
+    new GetExamples(req.locals.user, req.query.filters).Handle()
       .then((data: any) => {
         res.json(data);
       })
@@ -12,7 +12,7 @@ export default {
   },
   // Commands
   add: (req, res, next) => {
-    new AddExample().Handle(req.body)
+    new AddExample(req.locals.user).Handle(req.body)
       .then((data) => {
         res.status(201).json({ id: data.dataValues.id });
       })

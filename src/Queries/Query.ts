@@ -2,17 +2,20 @@ import Communication from '../Services/Communication';
 import { Sequelize } from 'sequelize-typescript';
 import FilterDto from '../Dto/Filter.dto';
 import * as Seq from 'sequelize';
+import User from '../Models/User';
 
 export default abstract class Query {
   protected db: Sequelize;
   protected filter: FilterDto;
+  protected user: User;
 
-  constructor(filters?: string) {
+  constructor(user: User, filters?: string) {
     this.db = Communication.getDB();
     this.filter = new FilterDto(filters !== undefined ? JSON.parse(filters): {});
+    this.user = user;
   }
 
-  public abstract Handle(): any;
+  public abstract Handle(req?: any): any;
 
   protected paginate(obj?: any): any {
     obj = obj || {};

@@ -1,4 +1,7 @@
 {
+  "authentication": {
+    "secret": "NodeBlancheSecret"
+  },
   "pagination": {
     "itemsPerPage": 10
   }

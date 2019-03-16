@@ -6,3 +6,7 @@ node_modules
 
 # Other JS files
 **/*.js
+
+# DB config
+src/Config/sequelize.dev.json
+src/Config/sequelize.prod.json
